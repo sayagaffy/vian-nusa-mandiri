@@ -83,7 +83,11 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
     yandex: process.env.YANDEX_VERIFICATION,
-    bing: process.env.BING_VERIFICATION
+    ...(process.env.BING_VERIFICATION ? {
+      other: {
+        'msvalidate.01': process.env.BING_VERIFICATION
+      }
+    } : {})
   },
   
   other: {

@@ -111,7 +111,7 @@ export default function OptimizedImage({
           className={`absolute inset-0 bg-gray-200 animate-pulse ${className}`}
         />
       )}
-      <Image {...finalImageProps} />
+      <Image {...finalImageProps} alt={alt || "Image"} />
     </div>
   );
 }

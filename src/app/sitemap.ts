@@ -1,6 +1,9 @@
 // app/sitemap.ts
 import { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+export const revalidate = 3600; // 1 hour
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://viannusamandiri.id";
 
@@ -36,20 +39,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
   ];
-}
-
-// app/robots.ts
-import { MetadataRoute } from "next";
-
-export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://viannusamandiri.id";
-
-  return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: ["/private/", "/admin/"],
-    },
-    sitemap: `${baseUrl}/sitemap.xml`,
-  };
 }

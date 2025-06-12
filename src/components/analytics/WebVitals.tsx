@@ -7,7 +7,7 @@ import { useReportWebVitals } from "next/web-vitals";
 declare global {
   interface Window {
     gtag: (
-      command: "event" | "config" | "js",
+      command: "event" | "config" | "js" | "set",
       targetId: string | Date,
       config?: Record<string, unknown>
     ) => void;
