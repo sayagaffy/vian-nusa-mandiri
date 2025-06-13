@@ -14,7 +14,7 @@ export function WhatsAppButton({
   link = "http://wa.me/6281312800025",
 }: WhatsAppButtonProps) {
   useEffect(() => {
-    const handleWhatsAppClick = (event: MouseEvent) => {
+    const handleWhatsAppClick = (event: Event) => {
       const target = event.currentTarget as HTMLButtonElement;
       if (target.dataset.whatsappLink) {
         window.open(target.dataset.whatsappLink, "_blank");
