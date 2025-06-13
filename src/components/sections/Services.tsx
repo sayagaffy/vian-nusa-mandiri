@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Building,
   Wrench,
@@ -5,10 +7,12 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function Services() {
   const services = [
     {
+      id: 1,
       icon: Building,
       title: "Jasa Konstruksi",
       subtitle: "Kontraktor Profesional",
@@ -25,6 +29,7 @@ export default function Services() {
       gradient: "from-blue-500 to-blue-700",
     },
     {
+      id: 2,
       icon: Wrench,
       title: "Perawatan Gedung",
       subtitle: "Facility Management",
@@ -41,6 +46,7 @@ export default function Services() {
       gradient: "from-green-500 to-green-700",
     },
     {
+      id: 3,
       icon: Package,
       title: "Pengadaan Barang",
       subtitle: "Supply & Procurement",
@@ -122,12 +128,13 @@ export default function Services() {
               </div>
 
               {/* CTA Button */}
-              <button
+              <Link
+                href={`/services/${service.id}`}
                 className={`w-full bg-gradient-to-r ${service.gradient} text-white py-3 px-6 rounded-xl font-medium hover:shadow-lg transition-all duration-300 group-hover:shadow-xl flex items-center justify-center gap-2`}
               >
                 Pelajari Lebih Lanjut
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              </Link>
             </div>
           ))}
         </div>
@@ -144,8 +151,23 @@ export default function Services() {
               Anda dengan tim ahli kami.
             </p>
             <div className="flex sm:flex-row flex-col justify-center gap-4">
-              <button className="btn-primary">Konsultasi Gratis</button>
-              <button className="btn-secondary">Request Quotation</button>
+              <button
+                onClick={() =>
+                  window.open("http://wa.me/6281312800025", "_blank")
+                }
+                className="btn-primary"
+              >
+                Konsultasi Gratis
+              </button>
+              <button
+                onClick={() => {
+                  const contactElement = document.querySelector("#contact");
+                  contactElement?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="btn-secondary"
+              >
+                Request Quotation
+              </button>
             </div>
           </div>
         </div>

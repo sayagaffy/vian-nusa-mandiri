@@ -1,15 +1,12 @@
-// app/robots.ts
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://viannusamandiri.id";
-
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/private/", "/admin/"],
+      disallow: ["/api/", "/private/"],
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: "https://viannusamandiri.com/sitemap.xml",
   };
 }

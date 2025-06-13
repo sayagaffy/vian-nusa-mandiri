@@ -1,42 +1,53 @@
-// app/sitemap.ts
 import { MetadataRoute } from "next";
 
-export const dynamic = "force-static";
-export const revalidate = 3600; // 1 hour
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://viannusamandiri.id";
+  const baseUrl = "https://viannusamandiri.com";
 
-  return [
+  const portfolioItems = [
+    { id: 1, title: "Renovasi Kantor Modern", lastModified: "2024-06-13" },
     {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
+      id: 2,
+      title: "Perawatan AC Gedung Perkantoran",
+      lastModified: "2024-06-13",
     },
-    {
-      url: `${baseUrl}/#tentang`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#layanan`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/#portfolio`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#kontak`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+    { id: 3, title: "Pengadaan Furniture Kantor", lastModified: "2024-06-13" },
+    { id: 4, title: "Konsultasi Desain Interior", lastModified: "2024-06-13" },
   ];
+
+  const servicesItems = [
+    { id: 1, title: "Jasa Konstruksi", lastModified: "2024-06-13" },
+    { id: 2, title: "Perawatan Gedung", lastModified: "2024-06-13" },
+    { id: 3, title: "Pengadaan Barang", lastModified: "2024-06-13" },
+  ];
+
+  const routes = [
+    { route: "/", priority: 1.0 },
+    { route: "/portfolio", priority: 0.8 },
+    { route: "/services", priority: 0.8 },
+    { route: "/about", priority: 0.7 },
+    { route: "/contact", priority: 0.6 },
+  ];
+
+  const sitemapRoutes: MetadataRoute.Sitemap = [
+    ...routes.map((route) => ({
+      url: `${baseUrl}${route.route}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: route.priority,
+    })),
+    ...portfolioItems.map((item) => ({
+      url: `${baseUrl}/portfolio/${item.id}`,
+      lastModified: new Date(item.lastModified),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...servicesItems.map((item) => ({
+      url: `${baseUrl}/services/${item.id}`,
+      lastModified: new Date(item.lastModified),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
+
+  return sitemapRoutes;
 }

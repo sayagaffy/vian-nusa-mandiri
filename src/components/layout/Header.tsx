@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,33 +10,36 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     e.preventDefault();
-    
+
     // Debug all IDs in the document
     console.log("All IDs in document:");
-    document.querySelectorAll('[id]').forEach(el => {
+    document.querySelectorAll("[id]").forEach((el) => {
       console.log(`- ${el.id}`);
     });
-    
-    const targetId = href.replace('#', '');
+
+    const targetId = href.replace("#", "");
     console.log("Scrolling to:", targetId);
-    
+
     const element = document.getElementById(targetId);
     if (element) {
       console.log("Element found, scrolling to:", element.offsetTop);
-      
+
       // Use setTimeout to ensure the scroll happens after any rendering
       setTimeout(() => {
         window.scrollTo({
           top: element.offsetTop - 100, // Offset for header height
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }, 100);
     } else {
       console.log("Element not found for ID:", targetId);
     }
-    
+
     // Close mobile menu if open
     if (isMenuOpen) {
       setIsMenuOpen(false);
@@ -73,7 +77,12 @@ export default function Header() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-blue-100">Konsultasi Gratis:</span>
-              <button className="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full font-medium text-xs transition-colors duration-200">
+              <button
+                onClick={() =>
+                  window.open("http://wa.me/6281312800025", "_blank")
+                }
+                className="bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full font-medium text-xs transition-colors duration-200"
+              >
                 Hubungi Sekarang
               </button>
             </div>
@@ -87,18 +96,13 @@ export default function Header() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="relative">
-                {/* Logo Icon - Three Lines Representing Earth, Water, Air */}
-                <div className="flex justify-center items-center bg-gradient-to-br from-blue-500 to-blue-700 rounded-full w-12 h-12 hover:scale-105 transition-transform duration-300">
-                  <div className="space-y-1">
-                    <div className="bg-white rounded-full w-6 h-0.5"></div>
-                    <div className="bg-white/80 ml-1 rounded-full w-4 h-0.5"></div>
-                    <div className="bg-white/90 rounded-full w-5 h-0.5"></div>
-                  </div>
-                </div>
-                {/* Infinity Circle - Subtle Outline */}
-                <div className="absolute inset-0 opacity-30 hover:opacity-60 border-2 border-blue-300 rounded-full transition-opacity duration-300"></div>
-              </div>
+              <OptimizedImage
+                src="/logo.svg"
+                alt="PT Vian Nusa Mandiri Logo"
+                width={48}
+                height={48}
+                className="hover:scale-105 transition-transform duration-300"
+              />
               <div>
                 <div className="font-bold text-gray-900 text-xl">
                   PT Vian Nusa Mandiri
@@ -125,10 +129,21 @@ export default function Header() {
 
             {/* Desktop CTA Buttons */}
             <div className="hidden lg:flex items-center gap-4">
-              <button className="font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200">
+              <button
+                onClick={() => {
+                  const contactElement = document.querySelector("#contact");
+                  contactElement?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200"
+              >
                 Request Quote
               </button>
-              <button className="btn-primary">
+              <button
+                onClick={() =>
+                  window.open("http://wa.me/6281312800025", "_blank")
+                }
+                className="btn-primary"
+              >
                 <Phone className="w-4 h-4" />
                 Hubungi Kami
               </button>
@@ -181,10 +196,21 @@ export default function Header() {
                 <span>info@viannusamandiri.com</span>
               </div>
               <div className="flex gap-4 pt-4">
-                <button className="flex-1 text-sm btn-secondary">
+                <button
+                  onClick={() => {
+                    const contactElement = document.querySelector("#contact");
+                    contactElement?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="flex-1 text-sm btn-secondary"
+                >
                   Request Quote
                 </button>
-                <button className="flex-1 text-sm btn-primary">
+                <button
+                  onClick={() =>
+                    window.open("http://wa.me/6281312800025", "_blank")
+                  }
+                  className="flex-1 text-sm btn-primary"
+                >
                   <Phone className="w-4 h-4" />
                   Call Now
                 </button>
@@ -193,8 +219,6 @@ export default function Header() {
           </div>
         </div>
       </header>
-
-     
     </>
   );
 }

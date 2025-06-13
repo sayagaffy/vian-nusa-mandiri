@@ -1,20 +1,18 @@
 // src/app/page.tsx
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import Hero from '@/components/sections/Hero'
-import About from '@/components/sections/About'
-import Services from '@/components/sections/Services'
-import Portfolio from '@/components/sections/Portfolio'
-import WhyChooseUs from '@/components/sections/WhyChooseUs'
-import Contact from '@/components/sections/Contact'
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Services from "@/components/sections/Services";
+import Portfolio from "@/components/sections/Portfolio";
+import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import Contact from "@/components/sections/Contact";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen">
-      <Header />
-      
       {/* Main Content */}
-      <div className=""> {/* Account for fixed header */}
+      <div className="">
+        {" "}
+        {/* Account for fixed header */}
         <section id="home" className="section">
           <Hero />
         </section>
@@ -34,16 +32,14 @@ export default function HomePage() {
           <Contact />
         </section>
       </div>
-      
-      <Footer />
-      
+
       {/* Skip to main content link for accessibility */}
-      <a 
-        href="#main-content" 
+      <a
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:top-4 focus:left-4 z-50 focus:absolute bg-blue-600 px-4 py-2 rounded-md text-white"
       >
         Skip to main content
       </a>
     </main>
-  )
+  );
 }

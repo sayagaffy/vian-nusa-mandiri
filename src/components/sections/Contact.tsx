@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Phone,
   Mail,
@@ -7,8 +9,62 @@ import {
   Send,
   ArrowRight,
 } from "lucide-react";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { ScrollButton } from "@/components/ui/ScrollButton";
+import { useState, FormEvent } from "react";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Pesan berhasil dikirim!");
+        setFormData({
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+      } else {
+        alert("Gagal mengirim pesan. Silakan coba lagi.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Terjadi kesalahan. Silakan coba lagi.");
+    }
+  };
+
   const contactInfo = [
     {
       icon: Phone,
@@ -52,6 +108,7 @@ export default function Contact() {
       action: "Chat WhatsApp",
       color: "green",
       gradient: "from-green-500 to-green-600",
+      link: "http://wa.me/6281312800025",
     },
     {
       icon: Phone,
@@ -60,6 +117,7 @@ export default function Contact() {
       action: "Telepon Sekarang",
       color: "blue",
       gradient: "from-blue-500 to-blue-600",
+      link: "http://wa.me/6281312800025",
     },
     {
       icon: Send,
@@ -68,6 +126,7 @@ export default function Contact() {
       action: "Kirim Permintaan",
       color: "purple",
       gradient: "from-purple-500 to-purple-600",
+      link: "#contact",
     },
   ];
 
@@ -109,12 +168,23 @@ export default function Contact() {
                 {action.title}
               </h3>
               <p className="mb-4 text-gray-600">{action.description}</p>
-              <button
-                className={`w-full bg-gradient-to-r ${action.gradient} text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-xl`}
-              >
-                {action.action}
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              {action.link.startsWith("http") ? (
+                <WhatsAppButton
+                  link={action.link}
+                  className={`w-full bg-gradient-to-r ${action.gradient} text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-xl`}
+                >
+                  {action.action}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </WhatsAppButton>
+              ) : (
+                <ScrollButton
+                  targetId={action.link.replace("#", "")}
+                  className={`w-full bg-gradient-to-r ${action.gradient} text-white py-3 px-4 rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-xl`}
+                >
+                  {action.action}
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </ScrollButton>
+              )}
             </div>
           ))}
         </div>
@@ -156,7 +226,7 @@ export default function Contact() {
               <h3 className="mb-6 font-bold text-gray-900 text-2xl">
                 Kirim Pesan Kepada Kami
               </h3>
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="gap-4 grid md:grid-cols-2">
                   <div>
                     <label className="block mb-2 font-medium text-gray-700 text-sm">
@@ -164,8 +234,12 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all"
                       placeholder="Masukkan nama Anda"
+                      required
                     />
                   </div>
                   <div>
@@ -174,6 +248,9 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
                       className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all"
                       placeholder="Nama perusahaan"
                     />
@@ -187,8 +264,12 @@ export default function Contact() {
                     </label>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all"
                       placeholder="email@perusahaan.com"
+                      required
                     />
                   </div>
                   <div>
@@ -197,8 +278,12 @@ export default function Contact() {
                     </label>
                     <input
                       type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
                       className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all"
                       placeholder="+62 XXX-XXXX-XXXX"
+                      required
                     />
                   </div>
                 </div>
@@ -207,7 +292,13 @@ export default function Contact() {
                   <label className="block mb-2 font-medium text-gray-700 text-sm">
                     Jenis Layanan
                   </label>
-                  <select className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all">
+                  <select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                    className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all"
+                    required
+                  >
                     <option value="">Pilih layanan yang dibutuhkan</option>
                     <option value="konstruksi">Jasa Konstruksi</option>
                     <option value="maintenance">Perawatan Gedung</option>
@@ -221,9 +312,13 @@ export default function Contact() {
                     Pesan
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     rows={4}
                     className="px-4 py-3 border border-gray-300 focus:border-transparent rounded-xl focus:ring-2 focus:ring-blue-500 w-full transition-all resize-none"
                     placeholder="Jelaskan kebutuhan proyek atau pertanyaan Anda..."
+                    required
                   ></textarea>
                 </div>
 
@@ -332,10 +427,12 @@ export default function Contact() {
               konstruksi dan operasional perusahaan Anda.
             </p>
             <div className="flex sm:flex-row flex-col justify-center gap-4">
-              <button className="btn-primary">Konsultasi Sekarang</button>
-              <button className="btn-secondary">
-                Download Company Profile
-              </button>
+              <WhatsAppButton className="btn-primary">
+                Konsultasi Sekarang
+              </WhatsAppButton>
+              <ScrollButton className="btn-secondary">
+                Kirim Permintaan
+              </ScrollButton>
             </div>
           </div>
         </div>

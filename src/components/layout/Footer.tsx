@@ -11,6 +11,7 @@ import {
   ExternalLink,
   ArrowUp,
 } from "lucide-react";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -53,13 +54,13 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex justify-center items-center bg-gradient-to-br from-blue-500 to-blue-700 rounded-full w-12 h-12">
-                <div className="space-y-1">
-                  <div className="bg-white rounded-full w-6 h-0.5"></div>
-                  <div className="bg-white/80 ml-1 rounded-full w-4 h-0.5"></div>
-                  <div className="bg-white/90 rounded-full w-5 h-0.5"></div>
-                </div>
-              </div>
+              <OptimizedImage
+                src="/logo-white.svg"
+                alt="PT Vian Nusa Mandiri Logo"
+                width={80}
+                height={80}
+                className="mr-3"
+              />
               <div>
                 <div className="font-bold text-xl">PT Vian Nusa Mandiri</div>
                 <div className="text-blue-400 text-sm">Building Excellence</div>
@@ -185,7 +186,12 @@ export default function Footer() {
             </div>
 
             {/* CTA Button */}
-            <button className="group flex justify-center items-center gap-2 bg-gradient-to-r from-blue-500 hover:from-blue-600 to-blue-700 hover:to-blue-800 px-4 py-3 rounded-xl w-full font-medium text-white transition-all duration-300">
+            <button
+              onClick={() =>
+                window.open("http://wa.me/6281312800025", "_blank")
+              }
+              className="group flex justify-center items-center gap-2 bg-gradient-to-r from-blue-500 hover:from-blue-600 to-blue-700 hover:to-blue-800 px-4 py-3 rounded-xl w-full font-medium text-white transition-all duration-300"
+            >
               Konsultasi Gratis
               <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1 duration-200" />
             </button>
